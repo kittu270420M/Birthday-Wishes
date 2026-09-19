@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Happy Birthday! - A Coder's Celebration</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="An interactive, animated coder's way of wishing Happy Birthday with music, confetti, and surprises." />
+    <meta property="og:title" content="Happy Birthday! 🎂" />
+    <meta property="og:description" content="A special interactive celebration made just for you!" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Outfit:wght@400;600;700;800&family=Fredoka:wght@500;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <!-- Celebration Canvas for Confetti & Fireworks -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Top Floating Controls Dock -->
+    <header class="top-controls" role="toolbar" aria-label="Celebration Controls">
+      <button id="sound-btn" class="control-btn" title="Toggle Festive Music" aria-label="Toggle Sound">
+        <span class="btn-icon" id="sound-icon">🔊</span>
+        <span class="btn-text">Music</span>
+        <div class="equalizer-bars" id="eq-bars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <button id="replay-btn" class="control-btn" title="Replay Celebration" aria-label="Replay Celebration">
+        <span class="btn-icon">↺</span>
+        <span class="btn-text">Replay</span>
+      </button>
+
+      <button id="share-btn" class="control-btn accent" title="Personalize & Share with a Friend" aria-label="Create Custom Birthday Card">
+        <span class="btn-icon">✨</span>
+        <span class="btn-text">Customize</span>
+      </button>
+    </header>
+
+    <!-- Tap to Play Audio Hint Banner (Auto-dismisses on interaction) -->
+    <div id="audio-prompt" class="audio-prompt" role="status">
+      <span class="pulse-icon">🎵</span>
+      <span>Tap anywhere for festive music!</span>
+    </div>
+
+    <!-- MAIN PRESENTATION STAGES -->
+    <main id="stage-viewport" class="stage-viewport">
+      
+      <!-- STAGE 1: INTRO & NAME GREETING -->
+      <section id="slide-1" class="first--slide stage active" aria-label="Introduction">
+        <div class="slide--content">
+          <h1>hello</h1>
+          <h2 id="recipient-name" class="dynamic-name">Amrutha Basireddy</h2>
+          <span class="border-line top"></span>
+          <span class="border-line right"></span>
+          <span class="border-line bottom"></span>
+          <span class="border-line left"></span>
+        </div>
+
+        <!-- Stage 1 Part B: "Today is your special day" -->
+        <div class="slide--content--one">
+          <h1 class="first">today</h1>
+          <h2 class="first">is</h2>
+          <h2 class="second">your</h2>
+          <h1 class="second">special day</h1>
+          <div class="circle--stuff">
+            <div class="ring-pulse"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE 2: "LET'S CELEBRATE" TRANSITION -->
+      <section id="slide-2" class="second--canvas stage" aria-label="Celebration Reveal">
+        <div class="content">
+          <h2>let's</h2>
+          <h2>celebrate</h2>
+        </div>
+        <div class="canvas--remove"></div>
+      </section>
+
+      <!-- STAGE 3: GRAND BIRTHDAY REVEAL -->
+      <section id="slide-3" class="third--canvas stage" aria-label="Birthday Wishes Reveal">
+        <div class="star--bg">
+          <img src="images/amusement-park.png" alt="Celebration Decor Left" id="b1" />
+          <img src="images/amusement-park.png" alt="Celebration Decor Right" id="b2" />
+        </div>
+
+        <div class="center--line">
+          <img src="images/balloons.png" id="bl--left" alt="Balloons Left" />
+          <img src="images/balloons.png" id="bl--right" alt="Balloons Right" />
+          <h1 id="happy-birthday-title"><span>h</span><span>a</span><span>p</span><span>p</span><span>y</span><span class="word-spacer"></span><span>b</span><span>i</span><span>r</span><span>t</span><span>h</span><span>d</span><span>a</span><span>y</span></h1>
+          <div id="personalized-subtext" class="personalized-subtext"></div>
+        </div>
+
+        <!-- Interactive Gift Boxes with Surprises -->
+        <div class="gifts-container" aria-label="Interactive Gift Boxes">
+          <div class="gift-wrapper" id="gift-wrap-1" data-gift-index="1" title="Click to unwrap gift 1!">
+            <div class="gift-hint">Unwrap me!</div>
+            <img src="images/gift.png" alt="Birthday Gift 1" class="interactive-gift" id="gf1" />
+          </div>
+
+          <div class="gift-wrapper" id="gift-wrap-2" data-gift-index="2" title="Click to unwrap gift 2!">
+            <div class="gift-hint">Unwrap me!</div>
+            <img src="images/gift.png" alt="Birthday Gift 2" class="interactive-gift" id="gf2" />
+          </div>
+
+          <div class="gift-wrapper" id="gift-wrap-3" data-gift-index="3" title="Click to unwrap gift 3!">
+            <div class="gift-hint">Unwrap me!</div>
+            <img src="images/gift.png" alt="Birthday Gift 3" class="interactive-gift" id="gf3" />
+          </div>
+        </div>
+
+        <!-- Tap prompt for gifts -->
+        <div class="tap-hint" id="gifts-tap-hint">
+          Tap the gifts for birthday surprises!
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SURPRISE GIFT MODAL -->
+    <div id="gift-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <button class="modal-close" id="modal-close-btn" aria-label="Close message">×</button>
+        <div class="modal-sparkles">✨ 🎉 ✨</div>
+        <h3 id="modal-title" class="modal-title">Birthday Surprise!</h3>
+        <p id="modal-body" class="modal-body">Your wish will appear here!</p>
+        <button class="modal-action-btn" id="modal-ack-btn">Yay! Thank You! 💖</button>
+      </div>
+    </div>
+
+    <!-- CUSTOMIZE & SHARE MODAL / CREATOR CARD -->
+    <div id="share-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="share-title" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="modal-card customize-card">
+        <button class="modal-close" id="share-close-btn" aria-label="Close modal">×</button>
+        <div class="modal-sparkles">🎂 ✨ 🎁</div>
+        <h3 id="share-title" class="modal-title">Create Birthday Wish</h3>
+        <p class="modal-subtitle">Enter details below to generate a personalized animated celebration link to share!</p>
+        
+        <form id="customize-form" class="customize-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="input-friend-name">Birthday Person's Name: <span class="required">*</span></label>
+            <input type="text" id="input-friend-name" placeholder="e.g. Sarah, Alex, Mom" maxlength="30" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label for="input-relation">Relationship:</label>
+            <div class="relation-chips" id="relation-chips">
+              <button type="button" class="chip active" data-rel="friend">Friend</button>
+              <button type="button" class="chip" data-rel="bestie">Bestie</button>
+              <button type="button" class="chip" data-rel="sister">Sister</button>
+              <button type="button" class="chip" data-rel="brother">Brother</button>
+              <button type="button" class="chip" data-rel="mom">Mom</button>
+              <button type="button" class="chip" data-rel="dad">Dad</button>
+              <button type="button" class="chip" data-rel="love">Love</button>
+            </div>
+            <input type="text" id="input-relation" placeholder="Or type custom (e.g. partner, mentor)" maxlength="25" />
+          </div>
+
+          <div class="form-group">
+            <label for="input-sender-name">Your Name (From):</label>
+            <input type="text" id="input-sender-name" placeholder="e.g. Krishna, Sam" maxlength="30" autocomplete="off" />
+          </div>
+
+          <div class="share-url-container">
+            <label class="url-label" for="generated-url">Generated Shareable Link:</label>
+            <div class="share-url-box">
+              <input type="text" id="generated-url" readonly />
+              <button type="button" id="copy-link-btn" class="copy-btn" title="Copy to clipboard">
+                <span class="btn-copy-icon">📋</span> Copy
+              </button>
+            </div>
+            <div class="share-actions-row">
+              <button type="button" id="whatsapp-share-btn" class="whatsapp-btn" title="Share directly on WhatsApp">
+                <span>📲</span> Share via WhatsApp
+              </button>
+            </div>
+          </div>
+          <span id="copy-status" class="copy-status"></span>
+
+          <div class="modal-actions">
+            <button type="button" id="preview-btn" class="modal-action-btn primary">🎉 Launch & Preview Celebration</button>
+            <button type="button" id="skip-demo-btn" class="skip-link-btn">Or view sample celebration &rarr;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Celebration Logic & Web Audio Synthesizer -->
+    <script src="js/index.js?v=5"></script>
+  </body>
+</html>
